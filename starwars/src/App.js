@@ -1,16 +1,22 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import Pagination from "./components/Pagination";
+import CharacterList from "./components/CharacterList";
+import "./App.css";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      starwarsChars: []
+      starwarsChars: [],
+      pagination: {
+        nextPageUrl: "",
+        prevPageUrl: ""
+      }
     };
   }
 
   componentDidMount() {
-    this.getCharacters('https://swapi.co/api/people/');
+    this.getCharacters("https://swapi.co/api/people/");
   }
 
   getCharacters = URL => {
@@ -22,17 +28,40 @@ class App extends Component {
         return res.json();
       })
       .then(data => {
-        this.setState({ starwarsChars: data.results });
+        console.log(data);
+        this.setState({
+          starwarsChars: data.results,
+          pagination: {
+            nextPageUrl: data.next,
+            prevPageUrl: data.previous
+          }
+        });
       })
       .catch(err => {
         throw new Error(err);
       });
   };
 
+  nextPage = URL => {
+    this.getCharacters(URL);
+  };
+
+  prevPage = URL => {
+    this.getCharacters(URL);
+  };
+
   render() {
+    console.log(this.state.pagination.nextPageUrl);
+    console.log(this.state.pagination.prevPageUrl);
     return (
       <div className="App">
         <h1 className="Header">React Wars</h1>
+        <CharacterList charList={this.state.starwarsChars} />
+        <Pagination
+          pagination={this.state.pagination}
+          nextMethod={this.nextPage}
+          prevMethod={this.prevPage}
+        />
       </div>
     );
   }

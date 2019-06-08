@@ -1,0 +1,22 @@
+.card-container {
+  width: 80vw;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card {
+  background: #fefefe;
+  box-shadow: 0 4px 8px #333;
+  width: 500px;
+  margin: 10px;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  margin: 5px;
+  border: none;
+  background: #fefefe;
+  box-shadow: 0 4px 8px #333;
+}
